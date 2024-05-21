@@ -1,20 +1,20 @@
 package api
 
 import (
-	"database/sql"
 	"log"
 	"net/http"
 
 	"github.com/gorilla/mux"
+	"github.com/jmoiron/sqlx"
 	"github.com/joshuahenriques/go-ecom/service/user"
 )
 
 type APIServer struct {
 	addr string
-	db   *sql.DB
+	db   *sqlx.DB
 }
 
-func NewAPIServer(addr string, db *sql.DB) *APIServer {
+func NewAPIServer(addr string, db *sqlx.DB) *APIServer {
 	return &APIServer{
 		addr: addr,
 		db:   db,
@@ -25,7 +25,8 @@ func (s *APIServer) Run() error {
 	router := mux.NewRouter()
 	subrouter := router.PathPrefix("/api/v1").Subrouter()
 
-	userHandler := user.NewHandler()
+	userStore := user.NewStore(s.db)
+	userHandler := user.NewHandler(userStore)
 	userHandler.RegisterRoutes(subrouter)
 
 	log.Println("Listening on", s.addr)

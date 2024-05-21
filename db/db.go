@@ -1,14 +1,14 @@
 package db
 
 import (
-	"database/sql"
 	"log"
 
+	"github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq"
 )
 
-func NewPostgresStorage(connStr string) (*sql.DB, error) {
-	db, err := sql.Open("postgres", connStr)
+func NewPostgresStorage(connStr string) (*sqlx.DB, error) {
+	db, err := sqlx.Open("postgres", connStr)
 	if err != nil {
 		log.Fatal(err)
 	}

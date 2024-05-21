@@ -1,10 +1,10 @@
 package main
 
 import (
-	"database/sql"
 	"fmt"
 	"log"
 
+	"github.com/jmoiron/sqlx"
 	"github.com/joshuahenriques/go-ecom/cmd/api"
 	"github.com/joshuahenriques/go-ecom/config"
 	"github.com/joshuahenriques/go-ecom/db"
@@ -25,7 +25,7 @@ func main() {
 	}
 }
 
-func initStorage(db *sql.DB) {
+func initStorage(db *sqlx.DB) {
 	err := db.Ping()
 	if err != nil {
 		log.Fatal(err)
