@@ -9,12 +9,12 @@ type UserStore interface {
 }
 
 type User struct {
-	ID        uuid.UUID `json:"id"`
-	FirstName string    `json:"firstName"`
-	LastName  string    `json:"lastName"`
-	Email     string    `json:"email"`
-	Password  string    `json:"-"`
-	CreatedAt string    `json:"createdAt"`
+	ID        uuid.UUID `json:"id" db:"id"`
+	FirstName string    `json:"firstName" db:"first_name"`
+	LastName  string    `json:"lastName" db:"last_name"`
+	Email     string    `json:"email" db:"email"`
+	Password  string    `json:"-" db:"password"`
+	CreatedAt string    `json:"createdAt" db:"created_at"`
 }
 
 type RegisterUserPayload struct {
