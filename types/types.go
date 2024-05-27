@@ -1,11 +1,29 @@
 package types
 
-import "github.com/google/uuid"
+import (
+	"time"
+
+	"github.com/google/uuid"
+)
 
 type UserStore interface {
 	GetUserByEmail(email string) (*User, error)
 	GetUserByID(id uuid.UUID) (*User, error)
 	CreateUser(User) error
+}
+
+type ProductStore interface {
+	GetProducts() (*[]Product, error)
+}
+
+type Product struct {
+	ID          uuid.UUID `json:"id" db:"id"`
+	Name        string    `json:"name" db:"name"`
+	Description string    `json:"description" db:"description"`
+	Image       string    `json:"image" db:"image"`
+	Price       float64   `json:"price" db:"price"`
+	Quantity    int       `json:"quantity" db:"quantity"` // not atomic, can cause issues with multiple concurrent requests
+	CreatedAt   time.Time `json:"createdAt" db:"created_at"`
 }
 
 type User struct {
@@ -14,7 +32,7 @@ type User struct {
 	LastName  string    `json:"lastName" db:"last_name"`
 	Email     string    `json:"email" db:"email"`
 	Password  string    `json:"-" db:"password"`
-	CreatedAt string    `json:"createdAt" db:"created_at"`
+	CreatedAt time.Time `json:"createdAt" db:"created_at"`
 }
 
 type RegisterUserPayload struct {

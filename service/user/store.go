@@ -22,7 +22,7 @@ func (s *Store) GetUserByEmail(email string) (*types.User, error) {
 	user := &types.User{}
 	err := s.db.Get(user, "SELECT * FROM users WHERE email=$1", email)
 	if err != nil {
-		return nil, fmt.Errorf("user not found")
+		return nil, fmt.Errorf("user not found: %v", err)
 	}
 
 	return user, nil
@@ -32,7 +32,7 @@ func (s *Store) GetUserByID(id uuid.UUID) (*types.User, error) {
 	user := &types.User{}
 	err := s.db.Get(user, "SELECT * FROM users WHERE id=$1", id)
 	if err != nil {
-		return nil, fmt.Errorf("user not found")
+		return nil, fmt.Errorf("user not found: %v", err)
 	}
 
 	return user, nil
