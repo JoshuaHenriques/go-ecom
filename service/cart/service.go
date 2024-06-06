@@ -12,7 +12,7 @@ func getCartItemsIDs(items []types.CartItem) ([]string, error) {
 
 	for i, item := range items {
 		if item.Quantity <= 0 {
-			return nil, fmt.Errorf("invalid quantity value", item.ProductID)
+			return nil, fmt.Errorf("invalid quantity value: %s", item.ProductID)
 		}
 
 		productIDs[i] = item.ProductID.String()
