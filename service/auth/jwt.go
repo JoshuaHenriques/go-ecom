@@ -99,7 +99,6 @@ func permissionDenied(w http.ResponseWriter) {
 
 func GetUserIDFromContext(ctx context.Context) uuid.UUID {
 	userID := ctx.Value(UserKey)
-	fmt.Printf("%s", userID)
 	if userID == nil {
 		return uuid.Nil
 	}
