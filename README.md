@@ -4,12 +4,8 @@ Go-Ecom is a REST API demonstrating a backend solution for an e-commerce web app
 
 ## API Endpoints
 
-GET /users/{id}
-
-POST /register
-
-POST /login
-
-GET /products
-
-POST /cart/checkout
+  GET /users/{id}
+  POST /register
+  POST /login
+  GET /products
+  POST /cart/checkout
