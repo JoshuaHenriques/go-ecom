@@ -15,9 +15,32 @@ type UserStore interface {
 type ProductStore interface {
 	GetProducts() (*[]Product, error)
 	GetProductByID(productID uuid.UUID) (*Product, error)
-	GetProductsByID(productIDs *[]string) (*[]Product, error)
+	GetProductsByID(productIDs []string) (*[]Product, error)
 	CreateProduct(CreateProductPayload) error
 	UpdateProduct(Product) error
+}
+
+type OrderStore interface {
+	CreateOrder(Order) (uuid.UUID, error)
+	CreateOrderItem(OrderItem) error
+}
+
+type Order struct {
+	ID        uuid.UUID `json:"id" db:"id"`
+	UserID    uuid.UUID `json:"userID" db:"userId"`
+	Total     float64   `json:"total" db:"total"`
+	Status    string    `json:"status" db:"status"`
+	Address   string    `json:"address" db:"address"`
+	CreatedAt time.Time `json:"createdAt" db:"created_at"`
+}
+
+type OrderItem struct {
+	ID        uuid.UUID `json:"id" db:"id"`
+	OrderID   uuid.UUID `json:"orderID" db:"order_id"`
+	ProductID uuid.UUID `json:"productID" db:"product_id"`
+	Quantity  int       `json:"quantity" db:"quantity"`
+	Price     float64   `json:"price" db:"price"`
+	CreatedAt time.Time `json:"createdAt" db:"created_at"`
 }
 
 type Product struct {
@@ -57,4 +80,13 @@ type CreateProductPayload struct {
 	Image       string  `json:"image"`
 	Price       float64 `json:"price" validate:"required"`
 	Quantity    int     `json:"quantity" validate:"required"`
+}
+
+type CartItem struct {
+	ProductID uuid.UUID `json:"productID"`
+	Quantity  int       `json:"quantity"`
+}
+
+type CartCheckoutPayload struct {
+	Items []CartItem `json:"items" validate:"required"`
 }
