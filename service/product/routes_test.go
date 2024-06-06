@@ -138,6 +138,6 @@ func (m *mockProductStore) UpdateProduct(product types.Product) error {
 	return nil
 }
 
-func (m *mockProductStore) GetProductsByID(ids *[]string) (*[]types.Product, error) {
+func (m *mockProductStore) GetProductsByID(productIDs []string) (*[]types.Product, error) {
 	return &[]types.Product{}, nil
 }
