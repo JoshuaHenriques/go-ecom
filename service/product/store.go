@@ -37,9 +37,9 @@ func (s *Store) GetProductByID(productID uuid.UUID) (*types.Product, error) {
 	return product, nil
 }
 
-func (s *Store) GetProductsByID(productIDs *[]string) (*[]types.Product, error) {
+func (s *Store) GetProductsByID(productIDs []string) (*[]types.Product, error) {
 	products := &[]types.Product{}
-	query := fmt.Sprintf(`SELECT * FROM products WHERE id IN ('%s'::uuid)`, strings.Join(*productIDs, "'::uuid,'"))
+	query := fmt.Sprintf(`SELECT * FROM products WHERE id IN ('%s'::uuid)`, strings.Join(productIDs, "'::uuid,'"))
 	err := s.db.Select(products, query)
 	if err != nil {
 		return nil, err
