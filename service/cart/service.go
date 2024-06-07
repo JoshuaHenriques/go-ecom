@@ -28,7 +28,7 @@ func (h *Handler) createOrder(products []types.Product, items []types.CartItem, 
 	}
 
 	if err := checkIfCartIsInStock(items, productMap); err != nil {
-		return uuid.Nil, 0, nil
+		return uuid.Nil, 0, err
 	}
 
 	totalPrice := calculateTotalPrice(items, productMap)
@@ -70,7 +70,7 @@ func checkIfCartIsInStock(cartItems []types.CartItem, products map[uuid.UUID]typ
 	for _, item := range cartItems {
 		product, ok := products[item.ProductID]
 		if !ok {
-			return fmt.Errorf("product %d is not available", item.ProductID)
+			return fmt.Errorf("product %s is not available", item.ProductID.String())
 		}
 
 		if product.Quantity < item.Quantity {
